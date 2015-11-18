@@ -13,6 +13,31 @@ var todos = [];
 var todoNextId = 1;
 
 //********************************
+//DELETE
+//********************************
+
+app.delete('/todos/:id', function(req, res)
+{
+	var todoId = parseInt(req.params.id);
+	var match = _.findWhere(todos, {id:todoId});
+	
+	
+	if(match)
+	{
+		console.log('Deleted:');
+		console.log(match);
+		todos = _.without(todos,match);
+		res.status(200).send(match);
+		
+	}
+	else
+	{
+		res.status(404).send();
+	}
+});
+
+
+//********************************
 //POST
 //********************************
 app.post('/todos', function(req,res)
