@@ -1,0 +1,137 @@
+[henry@ArchPC_Office todo-api]$ npm install sqlite3@3.0.10 --save
+
+> sqlite3@3.0.10 install /home/henry/NodeJsCourse/todo-api/node_modules/sqlite3
+> node-pre-gyp install --fallback-to-build
+
+make: Entering directory '/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/build'
+  ACTION deps_sqlite3_gyp_action_before_build_target_unpack_sqlite_dep Release/obj/gen/sqlite-autoconf-3081101/sqlite3.c
+  TOUCH Release/obj.target/deps/action_before_build.stamp
+  CC(target) Release/obj.target/sqlite3/gen/sqlite-autoconf-3081101/sqlite3.o
+  AR(target) Release/obj.target/deps/sqlite3.a
+  COPY Release/sqlite3.a
+  CXX(target) Release/obj.target/node_sqlite3/src/database.o
+In file included from ../src/database.h:11:0,
+                 from ../src/database.cc:5:
+../../nan/nan.h:261:25: error: redefinition of ‘template<class T> v8::Local<T> _NanEnsureLocal(v8::Local<T>)’
+ NAN_INLINE v8::Local<T> _NanEnsureLocal(v8::Local<T> val) {
+                         ^
+../../nan/nan.h:256:25: note: ‘template<class T> v8::Local<T> _NanEnsureLocal(v8::Handle<T>)’ previously declared here
+ NAN_INLINE v8::Local<T> _NanEnsureLocal(v8::Handle<T> val) {
+                         ^
+../../nan/nan.h:661:13: error: ‘node::smalloc’ has not been declared
+     , node::smalloc::FreeCallback callback
+             ^
+../../nan/nan.h:661:35: error: expected ‘,’ or ‘...’ before ‘callback’
+     , node::smalloc::FreeCallback callback
+                                   ^
+../../nan/nan.h: In function ‘v8::Local<v8::Object> NanNewBufferHandle(char*, size_t, int)’:
+../../nan/nan.h:665:50: error: ‘callback’ was not declared in this scope
+         v8::Isolate::GetCurrent(), data, length, callback, hint);
+                                                  ^
+../../nan/nan.h:665:60: error: ‘hint’ was not declared in this scope
+         v8::Isolate::GetCurrent(), data, length, callback, hint);
+                                                            ^
+../../nan/nan.h: In function ‘v8::Local<v8::Object> NanNewBufferHandle(const char*, uint32_t)’:
+../../nan/nan.h:672:67: error: no matching function for call to ‘New(v8::Isolate*, const char*&, uint32_t&)’
+     return node::Buffer::New(v8::Isolate::GetCurrent(), data, size);
+                                                                   ^
+In file included from ../../nan/nan.h:25:0,
+                 from ../src/database.h:11,
+                 from ../src/database.cc:5:
+/home/henry/.node-gyp/5.0.0/include/node/node_buffer.h:31:40: note: candidate: v8::MaybeLocal<v8::Object> node::Buffer::New(v8::Isolate*, v8::Local<v8::String>, node::encoding) <near match>
+ NODE_EXTERN v8::MaybeLocal<v8::Object> New(v8::Isolate* isolate,
+                                        ^
+/home/henry/.node-gyp/5.0.0/include/node/node_buffer.h:31:40: note:   conversion of argument 3 would be ill-formed:
+In file included from ../src/database.h:11:0,
+                 from ../src/database.cc:5:
+../../nan/nan.h:672:67: error: invalid conversion from ‘uint32_t {aka unsigned int}’ to ‘node::encoding’ [-fpermissive]
+     return node::Buffer::New(v8::Isolate::GetCurrent(), data, size);
+                                                                   ^
+In file included from ../../nan/nan.h:25:0,
+                 from ../src/database.h:11,
+                 from ../src/database.cc:5:
+/home/henry/.node-gyp/5.0.0/include/node/node_buffer.h:43:40: note: candidate: v8::MaybeLocal<v8::Object> node::Buffer::New(v8::Isolate*, char*, size_t) <near match>
+ NODE_EXTERN v8::MaybeLocal<v8::Object> New(v8::Isolate* isolate,
+                                        ^
+/home/henry/.node-gyp/5.0.0/include/node/node_buffer.h:43:40: note:   conversion of argument 2 would be ill-formed:
+In file included from ../src/database.h:11:0,
+                 from ../src/database.cc:5:
+../../nan/nan.h:672:67: error: invalid conversion from ‘const char*’ to ‘char*’ [-fpermissive]
+     return node::Buffer::New(v8::Isolate::GetCurrent(), data, size);
+                                                                   ^
+../../nan/nan.h: In function ‘v8::Local<v8::Object> NanNewBufferHandle(uint32_t)’:
+../../nan/nan.h:676:29: error: could not convert ‘node::Buffer::New(v8::Isolate::GetCurrent(), ((size_t)size))’ from ‘v8::MaybeLocal<v8::Object>’ to ‘v8::Local<v8::Object>’
+     return node::Buffer::New(v8::Isolate::GetCurrent(), size);
+                             ^
+../../nan/nan.h: In function ‘v8::Local<v8::Object> NanBufferUse(char*, uint32_t)’:
+../../nan/nan.h:683:12: error: ‘Use’ is not a member of ‘node::Buffer’
+     return node::Buffer::Use(v8::Isolate::GetCurrent(), data, size);
+            ^
+../src/database.cc: In static member function ‘static void node_sqlite3::Database::Work_BeginOpen(node_sqlite3::Database::Baton*)’:
+../src/database.cc:145:9: warning: unused variable ‘status’ [-Wunused-variable]
+     int status = uv_queue_work(uv_default_loop(),
+         ^
+../src/database.cc: In static member function ‘static void node_sqlite3::Database::Work_BeginClose(node_sqlite3::Database::Baton*)’:
+../src/database.cc:230:9: warning: unused variable ‘status’ [-Wunused-variable]
+     int status = uv_queue_work(uv_default_loop(),
+         ^
+../src/database.cc: In static member function ‘static void node_sqlite3::Database::Work_BeginExec(node_sqlite3::Database::Baton*)’:
+../src/database.cc:509:9: warning: unused variable ‘status’ [-Wunused-variable]
+     int status = uv_queue_work(uv_default_loop(),
+         ^
+../src/database.cc: In static member function ‘static void node_sqlite3::Database::Work_BeginLoadExtension(node_sqlite3::Database::Baton*)’:
+../src/database.cc:610:9: warning: unused variable ‘status’ [-Wunused-variable]
+     int status = uv_queue_work(uv_default_loop(),
+         ^
+node_sqlite3.target.mk:106: recipe for target 'Release/obj.target/node_sqlite3/src/database.o' failed
+make: *** [Release/obj.target/node_sqlite3/src/database.o] Error 1
+make: Leaving directory '/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/build'
+gyp ERR! build error 
+gyp ERR! stack Error: `make` failed with exit code: 2
+gyp ERR! stack     at ChildProcess.onExit (/usr/lib/node_modules/npm/node_modules/node-gyp/lib/build.js:270:23)
+gyp ERR! stack     at emitTwo (events.js:87:13)
+gyp ERR! stack     at ChildProcess.emit (events.js:172:7)
+gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:200:12)
+gyp ERR! System Linux 4.2.5-1-ARCH
+gyp ERR! command "/usr/bin/node" "/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "build" "--fallback-to-build" "--module=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64/node_sqlite3.node" "--module_name=node_sqlite3" "--module_path=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64"
+gyp ERR! cwd /home/henry/NodeJsCourse/todo-api/node_modules/sqlite3
+gyp ERR! node -v v5.0.0
+gyp ERR! node-gyp -v v3.0.3
+gyp ERR! not ok 
+node-pre-gyp ERR! build error 
+node-pre-gyp ERR! stack Error: Failed to execute '/usr/bin/node /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js build --fallback-to-build --module=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64/node_sqlite3.node --module_name=node_sqlite3 --module_path=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64' (1)
+node-pre-gyp ERR! stack     at ChildProcess.<anonymous> (/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/node_modules/node-pre-gyp/lib/util/compile.js:83:29)
+node-pre-gyp ERR! stack     at emitTwo (events.js:87:13)
+node-pre-gyp ERR! stack     at ChildProcess.emit (events.js:172:7)
+node-pre-gyp ERR! stack     at maybeClose (internal/child_process.js:818:16)
+node-pre-gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+node-pre-gyp ERR! System Linux 4.2.5-1-ARCH
+node-pre-gyp ERR! command "/usr/bin/node" "/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/node_modules/.bin/node-pre-gyp" "install" "--fallback-to-build"
+node-pre-gyp ERR! cwd /home/henry/NodeJsCourse/todo-api/node_modules/sqlite3
+node-pre-gyp ERR! node -v v5.0.0
+node-pre-gyp ERR! node-pre-gyp -v v0.6.9
+node-pre-gyp ERR! not ok 
+Failed to execute '/usr/bin/node /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js build --fallback-to-build --module=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64/node_sqlite3.node --module_name=node_sqlite3 --module_path=/home/henry/NodeJsCourse/todo-api/node_modules/sqlite3/lib/binding/node-v47-linux-x64' (1)
+npm WARN EPACKAGEJSON todo-api@1.0.0 No description
+npm WARN EPACKAGEJSON todo-api@1.0.0 No repository field.
+npm ERR! Linux 4.2.5-1-ARCH
+npm ERR! argv "/usr/bin/node" "/usr/bin/npm" "install" "sqlite3@3.0.10" "--save"
+npm ERR! node v5.0.0
+npm ERR! npm  v3.3.12
+npm ERR! code ELIFECYCLE
+
+npm ERR! sqlite3@3.0.10 install: `node-pre-gyp install --fallback-to-build`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the sqlite3@3.0.10 install script 'node-pre-gyp install --fallback-to-build'.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+npm ERR! If you do, this is most likely a problem with the sqlite3 package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node-pre-gyp install --fallback-to-build
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sqlite3
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/henry/NodeJsCourse/todo-api/npm-debug.log
