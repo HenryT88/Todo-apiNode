@@ -63,7 +63,36 @@ app.put('/todos/:id', function(req,res)
 	
 	
 });
+//********************************
+//GETS  (RETRIEVE A TODO)
+//********************************
+app.get('/', function(req,res)
+{	
+	res.send('Todo API Root');
+});
 
+app.get('/todos', function(req, res)
+{
+	var queryParams = req.query;
+	console.log(queryParams);
+	var filteredTodos = todos;
+	
+	if (queryParams.completed && queryParams.completed === 'true')
+	{
+		filteredTodos = _.where(todos,{"completed":true} );
+	}
+	else if (queryParams.completed && queryParams.completed === 'false')
+	{
+		filteredTodos = _.where(todos,{"completed":false} );
+	}
+	
+	
+	
+	res.json(filteredTodos);
+	
+	
+	
+});
 
 
 //********************************
@@ -96,36 +125,29 @@ app.delete('/todos/:id', function(req, res)
 //********************************
 app.post('/todos', function(req,res)
 {
-	var body = _.pick(req.body,'description', 'completed');
-	
-	
-	console.log('description: ' + body.description);
-	body.id = todoNextId;
-	body.description = body.description.trim();
-	if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0)
+	var added = [];
+	req.body.forEach(function(item)
 	{
-		return res.status(400).send();
-	}
-	
-	
-	res.json(body);
-	todos.push(body);
-	todoNextId +=1;
+		var body = _.pick(item,'description', 'completed');
+		
+		
+		console.log('description: ' + body.description);
+		body.id = todoNextId;
+		body.description = body.description.trim();
+		if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0)
+		{
+			return res.status(400).send();
+		}
+
+		todos.push(body);
+		added.push(body);
+		todoNextId +=1;
+	});
+	res.json(added);
 });
 
 
-//********************************
-//GETS  (RETRIEVE A TODO)
-//********************************
-app.get('/', function(req,res)
-{
-	res.send('Todo API Root');
-});
 
-app.get('/todos', function(req, res)
-{
-	res.json(todos);
-});
 
 app.get('/todos/:id', function(req,res)
 {		
