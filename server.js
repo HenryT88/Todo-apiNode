@@ -75,32 +75,32 @@ app.get('/', function(req,res)
 
 app.get('/todos', function(req, res)
 {
-	var queryParams = req.query;
-	console.log(queryParams);
-	var filteredTodos = todos;
+	var query = req.query;
 	
-	if (queryParams.completed && queryParams.completed === 'true')
+	var where = {}
+	
+	if(query.hasOwnProperty('completed') && query.completed === 'true')
 	{
-		filteredTodos = _.where(todos,{"completed":true} );
+		where.completed = true;
+	}else if(query.hasOwnProperty('completed') && query.completed === 'false')
+	{
+		where.completed = false;
 	}
-	else if (queryParams.completed && queryParams.completed === 'false')
+	
+	if(query.hasOwnProperty('q') && query.q.length > 0)
 	{
-		filteredTodos = _.where(todos,{"completed":false} );
+		where.description = {
+			$like: '%' + query.q + '%'
+		};
 	}
 	
-	//"Go To Work On Saturuday".indexOf('Work')
-	
-	
-	if(queryParams.q && queryParams.q.length > 0)
-	{
-		filteredTodos = _.filter(filteredTodos,function(item)
-		{
-			return item.description.toLowerCase().indexOf(queryParams.q.toLowerCase()) >= 0;
-		});
+	db.todo.findAll({where: where}).then(function(todos){
+		res.json(todos);
 		
-	}
+	}, function(e){
+		res.status(500).send();
+	});
 	
-		res.json(filteredTodos);
 	
 });
 
