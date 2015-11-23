@@ -1,6 +1,8 @@
+
+var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
-var express = require('express');
+var db = require('./db.js');
 
 
 var app = express();
@@ -139,10 +141,21 @@ app.delete('/todos/:id', function(req, res)
 //********************************
 app.post('/todos', function(req,res)
 {
-	var added = [];
-	req.body.forEach(function(item)
+	var body = _.pick(req.body,'description', 'completed');
+	
+	db.todo.create(body).then(function(todo){
+		res.json(todo.toJSON())
+		
+	},function(e){
+		res.status(400).json(e);
+	});
+	
+	///call db.todo.create() and if good - respond 200 and todo, else respond 400 (respond res.status(400).json(e)
+	/*
+	//var added = [];
+	/req.body.forEach(function(item)
 	{
-		var body = _.pick(item,'description', 'completed');
+		
 		
 		
 		console.log('description: ' + body.description);
@@ -158,6 +171,7 @@ app.post('/todos', function(req,res)
 		todoNextId +=1;
 	});
 	res.json(added);
+	* */
 });
 
 
@@ -182,10 +196,16 @@ app.get('/todos/:id', function(req,res)
 	
 });
 
+
 //********************************
 //LISTEN
 //********************************
-app.listen(port, function()
-{
-	console.log('express listening on PORT ' + port);
-});
+
+db.sequelize.sync().then(function(){
+	app.listen(port, function()
+	{
+		console.log('express listening on PORT ' + port);
+	});
+})
+
+
