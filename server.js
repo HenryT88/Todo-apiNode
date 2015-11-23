@@ -102,11 +102,24 @@ app.get('/todos', function(req, res)
 	
 		res.json(filteredTodos);
 	
+});
+
+app.get('/todos/:id', function(req,res)
+{
 	
+	var todoId = parseInt(req.params.id);
 	
-	
-	
-	
+	db.todo.findById(todoId).then(function(todo){
+		if(!!todo){
+			res.json(todo.toJSON())
+		}else
+		{
+			res.status(404).send();
+		}		
+		
+	},function(e){
+		res.status(500).send();
+	});
 	
 });
 
@@ -151,50 +164,9 @@ app.post('/todos', function(req,res)
 	});
 	
 	///call db.todo.create() and if good - respond 200 and todo, else respond 400 (respond res.status(400).json(e)
-	/*
-	//var added = [];
-	/req.body.forEach(function(item)
-	{
-		
-		
-		
-		console.log('description: ' + body.description);
-		body.id = todoNextId;
-		body.description = body.description.trim();
-		if(!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0)
-		{
-			return res.status(400).send();
-		}
-
-		todos.push(body);
-		added.push(body);
-		todoNextId +=1;
-	});
-	res.json(added);
-	* */
-});
-
-
-
-
-app.get('/todos/:id', function(req,res)
-{		
-	var todoId = parseInt(req.params.id);
-	var match = _.findWhere(todos, {id:todoId});
-	
-	
-	if(match)
-	{
-		console.log(match);
-		res.json(match);
-	}
-	else
-	{
-		res.status(404).send();
-	}
-	
 	
 });
+
 
 
 //********************************
