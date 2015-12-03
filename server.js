@@ -131,6 +131,7 @@ app.get('/todos/:id', function(req,res)
 app.delete('/todos/:id', function(req, res)
 {
 	var todoId = parseInt(req.params.id);
+	console.log(todoId);
 	var match = _.findWhere(todos, {id:todoId});
 	
 	
