@@ -21,49 +21,37 @@ var todoNextId = 1;
 app.put('/todos/:id', function(req,res)
 {
 	var todoId = parseInt(req.params.id);
-	var match = _.findWhere(todos, {id:todoId});
-	
 	var body = _.pick(req.body,'description', 'completed');
-	var validAttributes = {};
+	var attributes = {};
 	
-	if(!match)
+
+	if(body.hasOwnProperty('completed'))
 	{
-		return res.status(400).send();
-		//RUN RETURN AS IT STOPS EXTRA CODED EXECUTING
-	}
-	
-	if(body.hasOwnProperty('completed') && _.isBoolean(body.completed))
-	{
-		validAttributes.completed = body.completed;
-	}
-	else if (body.hasOwnProperty('completed'))
-	{
-		return res.status(404).send();		
-	}
-	else
-	{
-		//Never Provided Attribute - No Problem here
+		attributes.completed = body.completed;
 	}
 	
-	if(body.hasOwnProperty('description') && _.isString(body.description) && body.description.trim().length > 0)
+	if(body.hasOwnProperty('description'))
 	{
-		validAttributes.description = body.description;
-	}
-	else if (body.hasOwnProperty('description'))
-	{
-		return res.status(400).send();		
-	}
-	else
-	{
-		//Never Provided Attribute - No Problem here
+		attributes.description = body.description;
 	}
 	
-	//HERE - We are good to Update  _.extend
-	_.extend(match, validAttributes);
-	console.log(match);
-	res.json(match);
-	
-	
+	db.todo.findById(todoId).then(function(todo){
+		if(todo)
+		{
+			todo.update(attributes).then(function(todo){
+			res.json(todo.toJSON());
+			}, function(e){
+				res.status(400).json(e);
+			});
+		}
+		else
+		{
+			res.status(404).send();
+		}
+	}, function(){
+		res.status(500).send();
+	});
+
 });
 //********************************
 //GETS  (RETRIEVE A TODO)
