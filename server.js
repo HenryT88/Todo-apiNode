@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var db = require('./db.js');
+var middleware = require ('./middleware.js')(db);
 var bcrypt = require('bcrypt');
 
 
@@ -19,7 +20,7 @@ var todoNextId = 1;
 //********************************
 //PUT   (UPDATE A TODO)
 //********************************
-app.put('/todos/:id', function(req,res)
+app.put('/todos/:id', middleware.requireAuthentication,  function(req,res)
 {
 	var todoId = parseInt(req.params.id);
 	var body = _.pick(req.body,'description', 'completed');
@@ -57,12 +58,12 @@ app.put('/todos/:id', function(req,res)
 //********************************
 //GETS  (RETRIEVE A TODO)
 //********************************
-app.get('/', function(req,res)
+app.get('/', middleware.requireAuthentication,function(req,res)
 {	
 	res.send('Todo API Root');
 });
 
-app.get('/todos', function(req, res)
+app.get('/todos', middleware.requireAuthentication, function(req, res)
 {
 	var query = req.query;
 	
@@ -93,7 +94,7 @@ app.get('/todos', function(req, res)
 	
 });
 
-app.get('/todos/:id', function(req,res)
+app.get('/todos/:id',middleware.requireAuthentication, function(req,res)
 {
 	
 	var todoId = parseInt(req.params.id);
@@ -117,7 +118,7 @@ app.get('/todos/:id', function(req,res)
 //DELETE  (A TODO)
 //********************************
 
-app.delete('/todos/:id', function(req, res)
+app.delete('/todos/:id',middleware.requireAuthentication, function(req, res)
 {
 	var todoId = parseInt(req.params.id);
 	console.log(todoId);
@@ -167,7 +168,7 @@ app.delete('/todos/:id', function(req, res)
 //********************************
 //POST (CREATE A TODO)
 //********************************
-app.post('/todos', function(req,res)
+app.post('/todos', middleware.requireAuthentication, function(req,res)
 {
 	var body = _.pick(req.body,'description', 'completed');
 	
