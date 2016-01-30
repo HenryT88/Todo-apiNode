@@ -209,7 +209,8 @@ app.post('/users', function(req,res)
 app.post('/users/login', function(req,res){
 	var body = _.pick(req.body, 'email', 'password');
 	var userInstance;
-	
+	//var str = [];
+	//str.push(req.body);
 	db.user.authenticate(body).then(function(user){		
 		var token = user.generateToken('authentication');
 		userInstance = user;
@@ -223,6 +224,7 @@ app.post('/users/login', function(req,res){
 		
 	}).catch(function(e){
 		res.status(401).json(e);
+		//res.send(str);
 		
 	});
 });
@@ -242,7 +244,7 @@ app.delete('/users/login', middleware.requireAuthentication, function(req, res){
 //LISTEN
 //********************************
 
-db.sequelize.sync().then(function(){
+db.sequelize.sync({force:true}).then(function(){
 	app.listen(port, function()
 	{
 		console.log('express listening on PORT ' + port);
