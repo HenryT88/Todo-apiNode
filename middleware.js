@@ -21,7 +21,7 @@ module.exports = function(db){
 				req.user = user;
 				next();
 			}).catch(function(){
-				res.status(401).send();
+				res.status(401).send("Middleware Problem");
 			});
 			
 		}
