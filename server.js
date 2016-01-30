@@ -209,12 +209,13 @@ app.post('/users', function(req,res)
 app.post('/users/login', function(req,res){
 	var body = _.pick(req.body, 'email', 'password');
 	var userInstance;
-	//var str = [];
-	//str.push(req.body);
+	var str = [];
+	str.push(req.body);
 	db.user.authenticate(body).then(function(user){		
 		var token = user.generateToken('authentication');
+		str.push("Token: " + token);
 		userInstance = user;
-		
+		str.push("User: " + user);
 		return db.token.create({
 			token:token
 		});
