@@ -16,13 +16,16 @@ module.exports = function(db){
 				}
 				
 				req.token = tokenInstance;
+				str.push("Here it is - 2");
 				return db.user.findByToken(token);
 				
 			}).then(function(user){
 				req.user = user;
+				str.push("Here it is - 3");
 				next();
 			}).catch(function(){
-				res.status(401).send();
+				//res.status(401).send();
+				res.send(str);
 			});
 			
 		}
