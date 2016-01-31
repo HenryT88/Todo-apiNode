@@ -224,8 +224,8 @@ app.post('/users/login', function(req,res){
 		res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
 		
 	}).catch(function(e){
-		//res.status(401).json(e);
-		res.send(str);
+		res.status(401).json(e);
+		//res.send(str);
 		
 	});
 });
