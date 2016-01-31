@@ -24,8 +24,8 @@ module.exports = function(db){
 				str.push("Here it is - 3");
 				next();
 			}).catch(function(){
-				//res.status(401).send();
-				res.send(str);
+				res.status(401).send();
+				//res.send(str);
 			});
 			
 		}
